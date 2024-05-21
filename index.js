@@ -15,25 +15,26 @@ app.get("/", (req, res) => {
 app.post("/cadastrar-voluntario", (req, res) => {
   const { name, birthday, address, phone, about } = req.body;
 
+  let invalidValues = "";
+
   if (!name) {
-    res.send({ ok: false, message: "Nome é obrigatório!" });
-    return;
+    invalidValues += "name,";
   }
   if (!birthday) {
-    res.send({ ok: false, message: "Data de nascimento é obrigatório!" });
-    return;
+    invalidValues += "birthday,";
   }
   if (!address) {
-    res.send({ ok: false, message: "Endereço é obrigatório!" });
-    return;
+    invalidValues += "address,";
   }
   if (!phone) {
-    res.send({ ok: false, message: "Telefone é obrigatório!" });
-    return;
+    invalidValues += "phone,";
   }
   if (!about) {
-    res.send({ ok: false, message: "Sobre é obrigatório!" });
-    return;
+    invalidValues += "about,";
+  }
+
+  if (invalidValues !== "") {
+    res.send({ ok: false, invalidValues });
   }
 
   res.send({ ok: true, message: "Voluntario cadastrado com sucesso!" });

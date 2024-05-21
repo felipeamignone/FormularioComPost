@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   $("#submit-form").on("click", function () {
+    $(".text-danger").text("");
     const name = $("#inputName").val();
     const birthday = $("#inputBirthday").val();
     const address = $("#inputAddress").val();
@@ -20,8 +21,19 @@ document.addEventListener("DOMContentLoaded", function () {
     })
       .then((r) => r.json())
       .then((r) => {
-        alert(r.message);
         r.ok && window.location.reload();
+
+        if (r.invalidValues) {
+          const invalids = r.invalidValues.split(",");
+
+          invalids.forEach((field) => {
+            if (field !== "") {
+              const errorFieldName = field + "Error";
+
+              $(`#${errorFieldName}`).text("Campo Obrigatório");
+            }
+          });
+        }
       });
   });
 });
