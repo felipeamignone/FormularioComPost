@@ -1,6 +1,7 @@
 import express from "express";
 
-const port = 3001;
+const host = '0.0.0.0'; 
+const port = 3000;
 const app = express();
 
 app.set("view engine", "ejs");
@@ -40,8 +41,8 @@ app.post("/cadastrar-voluntario", (req, res) => {
   res.send({ ok: true, message: "Voluntario cadastrado com sucesso!" });
 });
 
-app.listen(port, () => {
-  console.log(`Server rodando em http://localhost:${port}`);
+app.listen(port, host, () => {
+  console.log(`Server rodando em http://${host}:${port}`);
 });
 
 export default app;
