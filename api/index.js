@@ -3,13 +3,95 @@ import express from "express";
 const port = 3001;
 const app = express();
 
-app.set("view engine", "ejs");
-app.set("views", "./views");
 app.use(express.static("public"));
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.render("formulario");
+  const pageHTML = `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+          crossorigin="anonymous"
+        />
+        <link href="./formulario.css" rel="stylesheet" />
+        <title>Formulário de cadastro</title>
+      </head>
+      <body>
+        <header><h3>Seja um Voluntário</h3></header>
+
+        <div class="container mt-2">
+          <form class="d-grid gap-2">
+            <div class="form-group">
+              <label for="inputName">Nome Completo:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputName"
+                placeholder="Digito seu nome completo"
+              />
+              <label class="text-danger" id="nameError"></label>
+            </div>
+            <div class="form-group">
+              <label for="inputBirthday">Data de nascimento:</label>
+              <input
+                type="date"
+                class="form-control"
+                id="inputBirthday"
+              />
+              <label class="text-danger" id="birthdayError"></label>
+            </div>
+            <div class="form-group">
+              <label for="inputAddress">Edereço:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputAddress"
+                placeholder="Digito seu endereço"
+              />
+              <label class="text-danger" id="addressError"></label>
+            </div>
+            <div class="form-group">
+              <label for="inputPhone">Telefone:</label>
+              <input type="text" class="form-control" id="inputPhone" />
+              <label class="text-danger" id="phoneError"></label>
+            </div>
+            <div class="form-group">
+              <label for="inputAbout">Sobre:</label>
+              <textarea
+                class="form-control"
+                id="inputAbout"
+                placeholder="conte um pouco sobre você"
+                rows="3"
+              ></textarea>
+              <label class="text-danger" id="aboutError"></label>
+            </div>
+            <button type="button" id="submit-form" class="btn btn-primary">
+              Cadastrar
+            </button>
+          </form>
+        </div>
+        <script src="./formulario.js"></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"
+        ></script>
+        <script
+          src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+          crossorigin="anonymous"
+        ></script>
+      </body>
+    </html>
+  `
+  res.write(pageHTML);
+  res.end();
 });
 
 app.post("/cadastrar-voluntario", (req, res) => {
